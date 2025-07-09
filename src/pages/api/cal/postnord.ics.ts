@@ -61,6 +61,9 @@ DTSTAMP:${dtstamp}
 DTSTART;VALUE=DATE:${dtstart.slice(0, 8)}
 SUMMARY:${icon} Utdelning i ${data.city}
 DESCRIPTION:${label === "delivery" ? "Planerad utdelning" : "Kommande utdelning"} från PostNord
+STATUS:CONFIRMED
+TRANSP:TRANSPARENT
+CLASS:PUBLIC
 END:VEVENT`);
   }
 
