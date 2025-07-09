@@ -1,0 +1,74 @@
+---
+
+---
+
+<section class="g-col-12 g-col-md-6 align-self-stretch justify-self-stretch">
+  <div class="content d-flex flex-column align-items-center justify-content-center h-100">
+    <div class="card mb-3 w-100 bg-light-subtle">
+      <div class="card-body">
+        <span id="info" class="d-block h3 font-weight-normal m-0 text-center"></span>
+
+        <div id="loading" class="text-center d-none">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Laddar...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form class="form w-100" name="search" action="/api/utdelningar.json" method="post">
+      <div class="d-grid gap-2 mb-3">
+        <input type="text" name="postalCode" id="postalCode" class="form-control form-control-lg" placeholder="Fyll i postnummer" />
+      </div>
+    </form>
+  </div>
+</section>
+
+<script is:inline>
+  const INITIAL = "Sök på postnummer nedan";
+  const NOT_FOUND = "🤔 Postnummer hittades inte";
+
+  const url = new URL(window.location.href);
+  const infoElement = document.getElementById("info");
+  const loadingElement = document.getElementById("loading");
+  const searchInput = document.getElementById("postalCode");
+
+  async function search(postalCode) {
+    let searchString = postalCode;
+    if (!searchString) {
+      searchString = searchInput.value;
+    }
+
+    const formData = new FormData();
+    formData.append("postalCode", searchString);
+
+    await fetch("/api/utdelningar.json", {
+      method: "POST",
+      body: formData,
+    });
+  }
+
+  function loading() {
+    infoElement.classList.add("d-none");
+    loadingElement.classList.remove("d-none");
+  }
+
+  function done() {
+    infoElement.classList.remove("d-none");
+    loadingElement.classList.add("d-none");
+  }
+
+  document.addEventListener("DOMContentLoaded", (event) => {
+    const postalCode = url.searchParams.get("postalCode").replaceAll(/\s/gm, "");
+
+    if (postalCode) {
+      loading();
+
+      search(postalCode);
+      // infoElement && infoElement.setHTMLUnsafe(NOT_FOUND);
+      searchInput.value = postalCode;
+    } else {
+      infoElement && infoElement.setHTMLUnsafe(INITIAL);
+    }
+  });
+</script>
