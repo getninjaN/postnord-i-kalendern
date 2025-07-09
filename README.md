@@ -1,52 +1,76 @@
-# Astro Starter Kit: Basics
+# 📬 PostNord i Kalendern
+
+![Vercel](https://vercelbadge.vercel.app/api/getninjaN/postnord-i-kalendern)
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
+
+**Get your PostNord delivery days right in your calendar** — emoji-powered, auto-updating `.ics` feed based on your Swedish postal code.
+
+Inspired by [Weather in your Calendar](https://weather-in-calendar.com/), but for mail instead of weather. Built with ❤️ for simplicity and utility.
+
+
+## 🚀 Demo
+
+👉 [PostNord i Kalendern](https://postnord-i-kalendern.se)
+
+---
+
+## 🔧 Tech Stack
+
+- [Astro](https://astro.build) – static site generator
+- [Vercel](https://vercel.com) – hosting & edge functions
+- [Upstash Redis](https://upstash.com/) – caching + rate limiting
+- iCalendar `.ics` – calendar file generation
+- PostNord's public API – delivery day data
+
+---
+
+## ✨ Features
+
+- 🗓️ Add to Google Calendar, Apple Calendar, Outlook, etc.
+- 📦 Emoji icons for different styles (📬 ✉️ 📦)
+- 🇸🇪 Works for Swedish postal codes only
+- ⚡️ No login required, fast and lightweight
+- 🔁 Auto-refreshes daily
+
+---
+
+## 🛠️ Setup
 
 ```sh
-pnpm create astro@latest -- --template basics
+git clone https://github.com/getninjaN/postnord-i-kalendern.git
+cd postnord-i-kalendern
+pnpm install
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+Create a .env or .env.local file with the following:
+```
+KV_REST_API_URL=
+KV_REST_API_TOKEN=
+VERCEL_API_TOKEN=
+VERCEL_EDGE_CONFIG_ID=
+VERCEL_TEAM_ID=
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+Then run the dev server:
+```
+pnpm dev
+```
 
-## 🧞 Commands
+---
 
-All commands are run from the root of the project, from a terminal:
+## 🔐 Notes
+* Not affiliated with PostNord.
+* Calendar feeds are .ics files refreshed automatically by your calendar app.
+* Rate limiting is handled via Redis to avoid excessive hits to PostNord's API.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+---
 
-## 👀 Want to learn more?
+## 🙌 Credits
+* Idea inspired by [Weather in your Calendar](https://weather-in-calendar.com/)
+* Emojis via Unicode
+* Built by @getninjaN
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+---
+
+## 💬 Feedback / Ideas?
+Issues and PRs welcome! Or say hi on [Product Hunt](https://www.producthunt.com/products/postnord-i-kalendern?launch=postnord-i-kalendern)
