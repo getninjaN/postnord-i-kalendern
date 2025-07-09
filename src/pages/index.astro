@@ -2,12 +2,14 @@
 import Welcome from "../components/Welcome.astro";
 import Search from "../components/Search.vue";
 import Layout from "../layouts/Layout.astro";
+
+const { host } = Astro.url
 ---
 
 <Layout>
   <main class="grid gap-0 min-vh-100">
     <Welcome />
 
-    <Search client:only />
+    <Search host={host} client:only />
   </main>
 </Layout>

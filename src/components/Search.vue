@@ -1,6 +1,13 @@
 <script setup>
 import { computed, onMounted, ref } from "vue";
 
+const props = defineProps({
+  host: {
+    type: String,
+    default: "postnord-i-kalendern.se"
+  }
+})
+
 const THINKING_EMOJI = "🤔";
 const INITIAL = "Sök på postnummer nedan";
 
@@ -13,7 +20,7 @@ const found = ref(null)
 
 const calendarUrl = computed(() => {
   if (!found.value) return "#";
-  return `webcal://postnord-i-kalendern.se/api/cal/postnord.ics?postalCode=${found.value?.postalCode}&icon=${selectedIcon.value}`
+  return `webcal://${props.host}/api/cal/postnord.ics?postalCode=${found.value?.postalCode}&icon=${selectedIcon.value}`
 })
 
 function setMessage(text) {
