@@ -1,6 +1,6 @@
 ---
 import Welcome from "../components/Welcome.astro";
-import Search from "../components/Search.astro";
+import Search from "../components/Search.vue";
 import Layout from "../layouts/Layout.astro";
 ---
 
@@ -8,6 +8,6 @@ import Layout from "../layouts/Layout.astro";
   <main class="grid min-vh-100">
     <Welcome />
 
-    <Search />
+    <Search client:only />
   </main>
 </Layout>

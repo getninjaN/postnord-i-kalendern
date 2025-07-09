@@ -1,5 +1,6 @@
 ---
 import "../assets/main.scss";
+import Analytics from "@vercel/analytics/astro";
 ---
 
 <!doctype html>
@@ -13,5 +14,7 @@ import "../assets/main.scss";
   </head>
   <body>
     <slot />
+
+    <Analytics />
   </body>
 </html>
