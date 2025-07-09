@@ -75,7 +75,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="g-col-12 g-col-md-6 align-self-stretch justify-self-stretch">
+  <section class="g-col-12 g-col-md-6 align-self-stretch justify-self-stretch py-5">
     <div class="content d-flex flex-column align-items-center justify-content-center h-100">
       <div class="card mb-3 w-100 bg-light-subtle">
         <div class="card-body">
@@ -92,15 +92,17 @@ onMounted(() => {
       </div>
 
       <div class="d-grid gap-2 mb-3 w-100">
-        <input
-          type="text"
-          v-model="postalCode"
-          id="postalCode"
-          class="form-control form-control-lg"
-          placeholder="Fyll i postnummer"
-          @blur="search()"
-          :disabled="isLoading"
-        />
+        <form class="form" name="searchForm" @submit.prevent="search()">
+          <input
+            type="text"
+            v-model="postalCode"
+            id="postalCode"
+            class="form-control form-control-lg"
+            placeholder="Fyll i postnummer"
+            @blur="search()"
+            :disabled="isLoading"
+          />
+        </form>
       </div>
 
       <div class="d-flex flex-column text-center">
@@ -121,14 +123,18 @@ onMounted(() => {
       <div class="mt-4">
         <a :href="calendarUrl" class="btn btn-lg btn-primary text-white w-100" role="button" :disabled="!found" :class="{ 'disabled': !found }">Lägg till i kalendern</a>
 
-        <div class="card mt-3 w-100 bg-light-subtle" v-if="found">
-          <div class="card-body w-100 d-flex align-items-center">
-            <code class="flex-grow-1 text-break">{{ calendarUrl }}</code>
-            
-            <a href="#" class="btn btn-light text-nowrap" style="width: 200px" @click="copy" :data-clipboard-text="calendarUrl">
-              <span :class="{ 'd-block': !copied, 'd-none': copied }">Kopiera</span>
-              <span :class="{ 'd-block': copied, 'd-none': !copied }">👍🏻 Kopierad</span>
-            </a>
+        <div class="mt-3" v-if="found">
+          <small class="d-block w-100 text-center">Om knappen inte fungerar som den ska så kopiera URLen nedan och lägg till den manuellt.</small>
+
+          <div class="card w-100 bg-light-subtle mt-2">
+            <div class="card-body w-100 d-flex align-items-center">
+              <code class="flex-grow-1 text-break">{{ calendarUrl }}</code>
+              
+              <a href="#" class="btn btn-light text-nowrap" style="width: 200px" @click="copy" :data-clipboard-text="calendarUrl">
+                <span :class="{ 'd-block': !copied, 'd-none': copied }">Kopiera</span>
+                <span :class="{ 'd-block': copied, 'd-none': !copied }">👍🏻 Kopierad</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
