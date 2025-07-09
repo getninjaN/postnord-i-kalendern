@@ -75,12 +75,10 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     const postnordData = await postnordApiResponse.json() as PostNordResponse;
-    const { postalCode: verifiedPostalCode, city } = postnordData;
-    
     const randomBuffer = Math.floor(Math.random() * 60 * 10); // up to 10 extra minutes
     await redisClient.set(cacheKey, postnordData, { ex: 86400 + randomBuffer }); // 1 day
 
-    return new Response(JSON.stringify({ postalCode: verifiedPostalCode, city }), {
+    return new Response(JSON.stringify(postnordData), {
       headers: {
         "Content-Type": "application/json",
         "Cache-Control": "max-age=86400"

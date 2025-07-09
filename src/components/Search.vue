@@ -45,6 +45,8 @@ async function search(code = null) {
 
     const json = await res.json();
 
+    console.log(json)
+
     if (!res.ok) {
       setMessage(`${THINKING_EMOJI} ${json.error ?? res.statusText}`);
       return;
@@ -86,8 +88,14 @@ onMounted(() => {
     <div class="content d-flex flex-column align-items-center justify-content-center h-100">
       <div class="card mb-3 w-100 bg-light-subtle">
         <div class="card-body">
-          <span v-if="!isLoading" class="d-block fs-4 font-weight-normal m-0 text-center">
+          <span v-if="!isLoading && !found" class="d-block fs-4 font-weight-normal m-0 text-center">
             {{ message }}
+          </span>
+
+          <span v-if="!isLoading && found">
+            <span class="fs-5">🏡 {{ found.postalCode }}, {{ found.city }}</span><br/>
+            📅 Kommande utdelning: {{ found.delivery }}<br/>
+            📦 Nästa gång: {{ found.upcoming }}
           </span>
 
           <div v-if="isLoading" class="text-center">
@@ -113,9 +121,9 @@ onMounted(() => {
       </div>
 
       <div class="d-flex flex-column text-center">
-        <b class="d-block mb-2">Välj ikon:</b>
+        <div class="d-flex align-items-center">
+          <b class="me-2">Välj ikon:</b>
 
-        <div class="d-flex">
           <input type="radio" v-model="selectedIcon" value="postbox" class="btn-check" id="icon" autocomplete="off" />
           <label class="btn btn-text fs-3" for="icon">📬</label>
 
