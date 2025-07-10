@@ -26,6 +26,29 @@ import SpeedInsights from "@vercel/speed-insights/astro";
     <meta name="twitter:title" content="PostNord i Kalendern" />
     <meta name="twitter:description" content="Få PostNords utdelningsdagar direkt i din kalender. Med emojis 📬 och enkel integration." />
     <meta name="twitter:image" content="https://postnord-i-kalendern.se/og-image.jpeg" />
+
+    <script is:inline type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "PostNord i Kalendern",
+        "url": "https://postnord-i-kalendern.se",
+        "image": "https://postnord-i-kalendern.se/og-image.jpeg",
+        "description": "Lägg till dina PostNord-utdelningsdagar direkt i kalendern. Fungerar med Google Kalender, Apple Kalender, Outlook m.fl. Inget konto behövs.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "SEK"
+        },
+        "creator": {
+          "@type": "Person",
+          "name": "Emil Gudmundsson"
+        },
+        "inLanguage": "sv"
+      }
+    </script>
   </head>
   <body>
     <slot />
