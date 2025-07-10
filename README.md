@@ -3,7 +3,7 @@
 ![Vercel](https://vercelbadge.vercel.app/api/getninjaN/postnord-i-kalendern)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 
-**Get your PostNord delivery days right in your calendar** — emoji-powered, auto-updating `.ics` feed based on your Swedish postal code.
+**Get your PostNord delivery days right in your calendar** — auto-updating `.ics` feed based on your Swedish postal code.
 
 Inspired by [Weather in your Calendar](https://weather-in-calendar.com/), but for mail instead of weather. Built with ❤️ for simplicity and utility.
 
@@ -44,11 +44,15 @@ pnpm install
 
 Create a .env or .env.local file with the following:
 ```
+VERCEL_API_TOKEN=
+VERCEL_TEAM_ID=
+VERCEL_OIDC_TOKEN=
+
+KV_URL=
 KV_REST_API_URL=
 KV_REST_API_TOKEN=
-VERCEL_API_TOKEN=
-VERCEL_EDGE_CONFIG_ID=
-VERCEL_TEAM_ID=
+KV_REST_API_READ_ONLY_TOKEN=
+REDIS_URL=
 ```
 
 Then run the dev server:
@@ -67,10 +71,8 @@ pnpm dev
 
 ## 🙌 Credits
 * Idea inspired by [Weather in your Calendar](https://weather-in-calendar.com/)
-* Emojis via Unicode
-* Built by @getninjaN
 
 ---
 
 ## 💬 Feedback / Ideas?
-Issues and PRs welcome! Or say hi on [Product Hunt](https://www.producthunt.com/products/postnord-i-kalendern?launch=postnord-i-kalendern)
+Issues and PRs welcome! Or say hi on [Product Hunt](https://www.producthunt.com/products/postnord-i-kalendern)
