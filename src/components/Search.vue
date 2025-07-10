@@ -45,8 +45,6 @@ async function search(code = null) {
 
     const json = await res.json();
 
-    console.log(json)
-
     if (!res.ok) {
       setMessage(`${THINKING_EMOJI} ${json.error ?? res.statusText}`);
       return;

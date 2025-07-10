@@ -66,7 +66,6 @@ export const POST: APIRoute = async ({ request }) => {
     );
 
     if (!postnordApiResponse.ok) {
-      console.log(postnordApiResponse)
       return new Response(JSON.stringify({ error: "Fel vid kontakt med PostNord" }), {
         status: postnordApiResponse.status,
         statusText: postnordApiResponse.statusText,
