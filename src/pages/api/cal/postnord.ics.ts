@@ -28,7 +28,7 @@ function sanitizeEmoji(icon: string) {
 
 export const GET: APIRoute = async ({ url }) => {
   const postalCode = url.searchParams.get("postalCode")?.replace(/\s/g, "");
-  const icon = sanitizeEmoji(url.searchParams.get("icon") || "");
+  const icon = sanitizeEmoji(url.searchParams.get("icon") || "postbox");
 
   if (!postalCode) {
     return new Response("Missing postalCode", { status: 400 });
@@ -55,28 +55,34 @@ export const GET: APIRoute = async ({ url }) => {
     const dtstart = formatAsICSDate(date);
     const uid = `${label}-${postalCode}@postnord-i-kalendern.se`;
 
-    events.push(`BEGIN:VEVENT
-UID:${uid}
-DTSTAMP:${dtstamp}
-DTSTART;VALUE=DATE:${dtstart.slice(0, 8)}
-SUMMARY:${icon} Utdelning i ${data.city}
-DESCRIPTION:${label === "delivery" ? "Planerad utdelning" : "Kommande utdelning"} från PostNord
-STATUS:CONFIRMED
-TRANSP:TRANSPARENT
-CLASS:PUBLIC
-END:VEVENT`);
+    events.push([
+      `BEGIN:VEVENT`,
+      `UID:${uid}`,
+      `DTSTAMP:${dtstamp}`,
+      `DTSTART;VALUE=DATE:${dtstart.slice(0, 8)}`,
+      `SUMMARY;LANGUAGE=sv:${icon} Utdelning i ${data.city}`,
+      `X-FUNAMBOL-ALLDAY:1`,
+      `X-MICROSOFT-CDO-ALLDAYEVENT:TRUE`,
+      `DESCRIPTION;LANGUAGE=sv:${label === "delivery" ? "Planerad utdelning" : "Kommande utdelning"} från PostNord`,
+      `STATUS:CONFIRMED`,
+      `TRANSP:TRANSPARENT`,
+      `CLASS:PUBLIC`,
+      `END:VEVENT`
+    ])
   }
 
-  const calendar = `BEGIN:VCALENDAR
-VERSION:2.0
-CALSCALE:GREGORIAN
-PRODID:-//postnord-i-kalendern.se//Postnord Calendar//EN
-NAME:PostNord utdelningar - ${data.city}
-X-WR-CALNAME:PostNord utdelningar - ${data.city}
-X-PUBLISHED-TTL:PT24H
-REFRESH-INTERVAL;VALUE=DURATION:PT24H
-${events.join("\n")}
-END:VCALENDAR`;
+  const calendar = [
+    `BEGIN:VCALENDAR`,
+    `VERSION:2.0`,
+    `CALSCALE:GREGORIAN`,
+    `PRODID:-//postnord-i-kalendern.se//Postnord Calendar//SV`,
+    `NAME:PostNord utdelningar - ${data.city}`,
+    `X-WR-CALNAME:PostNord utdelningar - ${data.city}`,
+    `X-PUBLISHED-TTL:PT24H`,
+    `REFRESH-INTERVAL;VALUE=DURATION:PT24H`,
+    ...events.flat(),
+    `END:VCALENDAR`,
+  ].join("\r\n") + "\r\n"
 
   return new Response(calendar, {
     headers: {
