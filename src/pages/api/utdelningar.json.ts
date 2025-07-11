@@ -75,7 +75,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     const postnordData = await postnordApiResponse.json() as PostNordResponse;
     const randomBuffer = Math.floor(Math.random() * 60 * 10); // up to 10 extra minutes
-    await redisClient.set(cacheKey, postnordData, { ex: 86400 + randomBuffer }); // 1 day
+    await redisClient.set(cacheKey, postnordData, { ex: (60 * 60 * 6) + randomBuffer }); // 6 hrs
 
     return new Response(JSON.stringify(postnordData), {
       headers: {
