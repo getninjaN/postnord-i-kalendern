@@ -78,8 +78,9 @@ export const GET: APIRoute = async ({ url }) => {
     `PRODID:-//postnord-i-kalendern.se//Postnord Calendar//SV`,
     `NAME:PostNord utdelningar - ${data.city}`,
     `X-WR-CALNAME:PostNord utdelningar - ${data.city}`,
-    `X-PUBLISHED-TTL:PT24H`,
-    `REFRESH-INTERVAL;VALUE=DURATION:PT24H`,
+    `METHOD:PUBLISH`,
+    `X-PUBLISHED-TTL:PT12H`,
+    `REFRESH-INTERVAL;VALUE=DURATION:PT12H`,
     ...events.flat(),
     `END:VCALENDAR`,
   ].join("\r\n") + "\r\n"
