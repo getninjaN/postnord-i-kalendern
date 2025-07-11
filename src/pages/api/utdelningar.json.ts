@@ -61,9 +61,7 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   try {
-    const postnordApiResponse = await fetch(
-      `https://portal.postnord.com/api/sendoutarrival/closest?postalCode=${postalCode}`
-    );
+    const postnordApiResponse = await fetch(`https://portal.postnord.com/api/sendoutarrival/closest?postalCode=${postalCode}`);
 
     if (!postnordApiResponse.ok) {
       return new Response(JSON.stringify({ error: "Fel vid kontakt med PostNord" }), {

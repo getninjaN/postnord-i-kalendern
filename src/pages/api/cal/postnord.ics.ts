@@ -35,7 +35,7 @@ export const GET: APIRoute = async ({ url }) => {
   }
 
   const cacheKey = `pn_${postalCode}`;
-  const data = await redis.get(cacheKey) as {
+  let data = await redis.get(cacheKey) as {
     delivery: string;
     upcoming: string;
     postalCode: string;
@@ -43,7 +43,18 @@ export const GET: APIRoute = async ({ url }) => {
   } | null;
 
   if (!data) {
-    return new Response("Not found", { status: 404 });
+    try {
+      const postnordRes = await fetch(`https://portal.postnord.com/api/sendoutarrival/closest?postalCode=${postalCode}`);
+      if (!postnordRes.ok) throw new Error("PostNord fetch failed");
+  
+      const postnordData = await postnordRes.json();
+      data = postnordData;
+  
+      const randomBuffer = Math.floor(Math.random() * 60 * 10); // up to 10 mins
+      await redis.set(cacheKey, data, { ex: 60 * 60 * 6 + randomBuffer }); // 6h + jitter
+    } catch (err) {
+      return new Response("PostNord fetch failed", { status: 502 });
+    }
   }
 
   const now = new Date();
